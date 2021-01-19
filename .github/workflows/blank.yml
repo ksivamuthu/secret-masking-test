@@ -27,9 +27,16 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: base64 secret
-        run: echo  ${{ secrets.SuperSecret }} | base64 
+        run: echo "${{ secrets.SuperSecret }}" | base64 
         
       - name: echo secret
-        run: echo  ${{ secrets.SuperSecret }} > secrets.txt && cat secrets.txt
-
+        run: echo  "${{ secrets.SuperSecret }}" > secrets.txt
     
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2.2.2
+        with:
+          # Artifact name
+          name: test
+          # A file, directory or wildcard pattern that describes what to upload
+          path: secrets.txt
+          # The desired behavior if no files are found using the provided path.
